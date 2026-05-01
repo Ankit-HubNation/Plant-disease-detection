@@ -1,21 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Result</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Result</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>🔍 Detection Result</h1>
+    <div class="header">
+        <h1>🔍 Detection Result</h1>
+        <p class="subtitle">AI Analysis Complete</p>
+    </div>
 
-    <img src="/{{ image_path }}" width="300"><br><br>
+    <div class="result-card">
+        <div class="result-image">
+            <img src="/{{ image_path }}" alt="Analyzed plant image">
+        </div>
 
-    <h2>Disease: {{ prediction }}</h2>
-    <h3>Confidence: {{ confidence }}%</h3>
+        <div class="result-info">
+            <div class="result-item">
+                <label>Detected Condition:</label>
+                <h2 class="prediction">{{ prediction }}</h2>
+            </div>
+            
+            <div class="result-item">
+                <label>Confidence Score:</label>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: {{ confidence }}%"></div>
+                </div>
+                <p class="confidence-text">{{ confidence }}% Confident</p>
+            </div>
 
-    <br>
-    <a href="/">🔁 Try Another</a>
+            <div class="disease-info">
+                {% if prediction == 'Tomato_Early_blight' %}
+                    <h3>Early Blight Information</h3>
+                    <p><strong>Description:</strong> Early blight is a common fungal disease that affects tomato plants.</p>
+                    <p><strong>Symptoms:</strong> Brown spots on leaves, yellow halos, leaf wilting</p>
+                    <p><strong>Prevention:</strong> Remove infected leaves, improve air circulation, apply fungicide</p>
+                {% elif prediction == 'Tomato_healthy' %}
+                    <h3>✅ Healthy Plant</h3>
+                    <p><strong>Status:</strong> Your plant appears to be healthy with no signs of disease detected.</p>
+                    <p><strong>Care Tips:</strong> Continue regular watering and provide adequate sunlight.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <a href="/" class="btn-primary">🔁 Analyze Another Plant</a>
+    </div>
 </div>
 
 </body>

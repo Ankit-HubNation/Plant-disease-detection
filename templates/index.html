@@ -1,20 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Disease Detection</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>🌿 AI Plant Disease Detection</h1>
+    <div class="header">
+        <h1>🌿 AI Plant Disease Detection</h1>
+        <p class="subtitle">Upload a plant image to detect diseases using AI</p>
+    </div>
 
-    <form action="/predict" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" required>
-        <br><br>
-        <button type="submit">Detect Disease</button>
-    </form>
+    <div class="upload-area" id="uploadArea">
+        <form action="/predict" method="post" enctype="multipart/form-data" id="uploadForm">
+            <div class="upload-box">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <h3>Drag and drop your image here</h3>
+                <p>or</p>
+                <label class="file-input-label">
+                    Browse Files
+                    <input type="file" name="image" id="imageInput" required accept="image/*" style="display: none;">
+                </label>
+                <p class="file-info">Supported formats: JPG, PNG, WEBP</p>
+            </div>
+            
+            <div id="previewContainer" class="preview-container" style="display: none;">
+                <img id="previewImage" src="" alt="Preview">
+                <p id="fileName" class="file-name"></p>
+                <button type="button" class="btn-change" onclick="document.getElementById('imageInput').click()">Change Image</button>
+            </div>
+            
+            <button type="submit" class="btn-detect" id="detectBtn" style="display: none;">Detect Disease</button>
+        </form>
+    </div>
 </div>
+
+<script>
+    const uploadArea = document.getElementById('uploadArea');
+    const imageInput = document.getElementById('imageInput');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImage = document.getElementById('previewImage');
+    const fileName = document.getElementById('fileName');
+    const detectBtn = document.getElementById('detectBtn');
+    const uploadBox = document.querySelector('.upload-box');
+
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            imageInput.files = files;
+            handleImageSelect();
+        }
+    });
+
+    // File input change
+    imageInput.addEventListener('change', handleImageSelect);
+
+    function handleImageSelect() {
+        const file = imageInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                fileName.textContent = file.name;
+                uploadBox.style.display = 'none';
+                previewContainer.style.display = 'block';
+                detectBtn.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 
 </body>
 </html>

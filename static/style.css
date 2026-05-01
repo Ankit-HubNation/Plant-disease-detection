@@ -1,35 +1,327 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial;
-    background: linear-gradient(to right, #56ab2f, #a8e063);
-    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
 .container {
-    margin-top: 100px;
     background: white;
-    padding: 40px;
-    border-radius: 12px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+    padding: 50px 40px;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    color: #667eea;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Upload Area */
+.upload-area {
+    width: 100%;
+}
+
+.upload-box {
+    border: 3px dashed #667eea;
+    border-radius: 15px;
+    padding: 40px 20px;
+    text-align: center;
+    background: #f8f9ff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+    background: #f0f2ff;
+    border-color: #764ba2;
+}
+
+#uploadArea.dragover .upload-box {
+    background: #e8ebff;
+    border-color: #764ba2;
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    width: 60px;
+    height: 60px;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.upload-box h3 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.upload-box p {
+    color: #999;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.file-input-label {
     display: inline-block;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    padding: 10px 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+    margin: 15px 0;
 }
 
-h1 {
-    color: green;
+.file-input-label:hover {
+    transform: scale(1.05);
 }
 
-button {
-    padding: 12px 25px;
-    background: green;
+.file-info {
+    font-size: 12px;
+    color: #999;
+    margin-top: 10px;
+}
+
+/* Preview Container */
+.preview-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.preview-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.file-name {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+    word-break: break-all;
+}
+
+.btn-change {
+    padding: 8px 20px;
+    background: #f0f2ff;
+    color: #667eea;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-change:hover {
+    background: #667eea;
+    color: white;
+}
+
+/* Buttons */
+.btn-detect {
+    width: 100%;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-button:hover {
-    background: darkgreen;
+.btn-detect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
 
-input {
-    padding: 10px;
+.btn-detect:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Result Card */
+.result-card {
+    display: grid;
+    gap: 30px;
+}
+
+.result-image {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.result-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.result-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.result-item {
+    padding: 20px;
+    background: #f8f9ff;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.result-item label {
+    display: block;
+    color: #999;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.result-item h2 {
+    color: #333;
+    font-size: 24px;
+    margin: 0;
+}
+
+.prediction {
+    color: #667eea;
+    font-weight: 700;
+}
+
+/* Confidence Bar */
+.confidence-bar {
+    width: 100%;
+    height: 10px;
+    background: #e8ebff;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 5px;
+    transition: width 0.6s ease;
+}
+
+.confidence-text {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Disease Info */
+.disease-info {
+    padding: 20px;
+    background: #f0f9ff;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.disease-info h3 {
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.disease-info p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 8px 0;
+}
+
+.disease-info strong {
+    color: #333;
+}
+
+/* Action Buttons */
+.action-buttons {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 30px 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .upload-box {
+        padding: 30px 15px;
+    }
+
+    .upload-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .result-card {
+        gap: 20px;
+    }
 }
